@@ -1,0 +1,34 @@
+local maxFood = 100
+local currentFood = maxFood
+local foodDecreaseRate = 1 -- Tasa de disminución de la comida por segundo
+
+local foodBar = script.Parent:WaitForChild("FoodBar")
+local foodText = script.Parent:WaitForChild("FoodText")
+
+local previousFood = currentFood
+
+local function decreaseFood()
+    while currentFood > 0 do
+        wait(1)
+        currentFood = currentFood - foodDecreaseRate
+        currentFood = math.max(currentFood, 0) -- Asegura que la comida no baje de 0
+        updateFoodBar()
+    end
+    print("¡Pou necesita comida!")
+end
+
+function updateFoodBar()
+    foodBar.Size = UDim2.new(currentFood / maxFood, 0, 1, 0) -- Actualiza el tamaño de la barra de comida
+    foodText.Text = "Comida: " .. math.floor(currentFood) -- Actualiza el texto con la cantidad de comida
+end
+
+function feedPou(amount)
+    currentFood = currentFood + amount
+    currentFood = math.min(currentFood, maxFood) -- Asegura que la comida no suba del máximo
+    updateFoodBar()
+end
+
+spawn(decreaseFood)
+
+-- Ejemplo de cómo alimentar a Pou (puedes llamar a esta función desde otro script)
+feedPou(10)
