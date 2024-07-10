@@ -29,6 +29,3 @@ function feedPou(amount)
 end
 
 spawn(decreaseFood)
-
--- Ejemplo de cómo alimentar a Pou (puedes llamar a esta función desde otro script)
-feedPou(10)
